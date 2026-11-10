@@ -1,0 +1,7 @@
+# Bazel
+## Symlinks created by Bazel in the workspace root
+/bazel-*
+## Local, user-specific Bazel config (via try-import in .bazelrc)
+/user.bazelrc
+## Bazel disk cache / repository cache (if configured inside the workspace)
+.bazel_cache/
