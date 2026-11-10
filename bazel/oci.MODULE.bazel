@@ -1,0 +1,37 @@
+# *******************************************************************************
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+bazel_dep(name = "rules_pkg", version = "1.1.0")
+bazel_dep(name = "rules_oci", version = "2.3.1")
+git_override(
+    module_name = "rules_oci",
+    commit = "f214185dcf149090cb3212e878f692eb2c8c0d3d",  # v2.3.1
+    remote = "https://github.com/bazel-contrib/rules_oci.git",
+)
+
+oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+oci.pull(
+    name = "eclipse_autosd10_qemu",
+    digest = "sha256:91560c5c7e80b00347ad0ce8de0ec38c3682b989d3ca2bc63cb35976cb518c5c",
+    image = "ghcr.io/eclipse-autosd/eclipse-autosd-bootc-qemu",
+    platforms = [
+        "linux/amd64",
+        "linux/arm64",
+    ],
+    tag = "latest",
+)
+use_repo(
+    oci,
+    "eclipse_autosd10_qemu",
+    "eclipse_autosd10_qemu_linux_amd64",
+    "eclipse_autosd10_qemu_linux_arm64",
+)
